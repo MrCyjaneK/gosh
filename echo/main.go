@@ -1,8 +1,3 @@
-// Usage:
-// echo <stuff>
-// Output:
-// <stuff>
-
 package gosh_echo
 
 import (
