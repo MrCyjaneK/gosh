@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 )
 
 var (
-	STDIN  *os.File
-	STDOUT *os.File
-	STDERR *os.File
+	STDIN  *bufio.Reader
+	STDOUT *bufio.Writer
+	STDERR *bufio.Writer
 
 	CWD = "/"
 
@@ -19,10 +20,16 @@ var (
 )
 
 func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
-	STDIN = stdin
-	STDOUT = stdout
-	STDERR = stderr
-	ERRCODE = 0
+	STDIN = bufio.NewReader(stdin)
+	STDOUT = bufio.NewWriter(stdout)
+	STDERR = bufio.NewWriter(stderr)
+	go func() {
+		for {
+			STDOUT.Flush()
+			STDERR.Flush()
+			time.Sleep(time.Second / 10)
+		}
+	}()
 	loadenv()
 	input := bufio.NewScanner(STDIN)
 	STDOUT.Write([]byte(getPrompt()))

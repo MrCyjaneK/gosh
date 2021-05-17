@@ -9,6 +9,10 @@ import (
 	gosh_printenv "git.mrcyjanek.net/mrcyjanek/gosh/printenv"
 )
 
+func Handlecmd(cmd []string) {
+	handlecmd(cmd)
+}
+
 func handlecmd(cmd []string) {
 	switch cmd[0] {
 	case "cat":

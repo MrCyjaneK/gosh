@@ -1,11 +1,12 @@
 package gosh_cat
 
 import (
+	"bufio"
 	"io"
 	"os"
 )
 
-func Handle(cmd []string, STDIN *os.File, STDOUT *os.File, STDERR *os.File, CWD string, ENV map[string]string) uint8 {
+func Handle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer, CWD string, ENV map[string]string) uint8 {
 	if len(cmd) == 1 {
 		io.Copy(STDOUT, STDIN)
 		return 0

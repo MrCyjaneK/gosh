@@ -1,11 +1,11 @@
 package gosh_ls
 
 import (
+	"bufio"
 	"io/ioutil"
-	"os"
 )
 
-func Handle(cmd []string, STDIN *os.File, STDOUT *os.File, STDERR *os.File, CWD string, ENV map[string]string) uint8 {
+func Handle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer, CWD string, ENV map[string]string) uint8 {
 	files, err := ioutil.ReadDir(CWD)
 	if err != nil {
 		STDERR.WriteString(err.Error() + "\n")

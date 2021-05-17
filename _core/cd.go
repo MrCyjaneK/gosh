@@ -1,13 +1,14 @@
 package gosh
 
 import (
+	"bufio"
 	"io/fs"
 	"os"
 	"path"
 	"strings"
 )
 
-func cdHandle(cmd []string, STDIN *os.File, STDOUT *os.File, STDERR *os.File, XCWD string, ENV map[string]string) uint8 {
+func cdHandle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer, XCWD string, ENV map[string]string) uint8 {
 	if len(cmd) != 2 {
 		STDOUT.WriteString("Incorrect arguments provided!\n")
 		return 1
