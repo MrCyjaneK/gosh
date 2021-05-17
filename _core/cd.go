@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func cdHandle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer, XCWD string, ENV map[string]string) uint8 {
+func cdHandle(cmd []string, STDIN *bufio.ReadWriter, STDOUT *bufio.ReadWriter, STDERR *bufio.ReadWriter, XCWD string, ENV map[string]string) uint8 {
 	if len(cmd) != 2 {
 		STDOUT.WriteString("Incorrect arguments provided!\n")
 		return 1

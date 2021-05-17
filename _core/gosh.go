@@ -8,9 +8,9 @@ import (
 )
 
 var (
-	STDIN  *bufio.Reader
-	STDOUT *bufio.Writer
-	STDERR *bufio.Writer
+	STDIN  *bufio.ReadWriter
+	STDOUT *bufio.ReadWriter
+	STDERR *bufio.ReadWriter
 
 	CWD = "/"
 
@@ -20,9 +20,9 @@ var (
 )
 
 func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
-	STDIN = bufio.NewReader(stdin)
-	STDOUT = bufio.NewWriter(stdout)
-	STDERR = bufio.NewWriter(stderr)
+	STDIN = bufio.NewReadWriter(bufio.NewReader(stdin), bufio.NewWriter(stdin))
+	STDOUT = bufio.NewReadWriter(bufio.NewReader(stdout), bufio.NewWriter(stdout))
+	STDERR = bufio.NewReadWriter(bufio.NewReader(stderr), bufio.NewWriter(stderr))
 	go func() {
 		for {
 			STDOUT.Flush()
@@ -51,18 +51,22 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 		}
 		if cmd[len(cmd)-1] == "&" {
 			cmd = cmd[:len(cmd)-1]
-			go handlecmd(cmd)
+			go handlecmd(cmd, STDIN, STDOUT, STDERR)
 		} else {
-			handlecmd(cmd)
+			handlecmd(cmd, STDIN, STDOUT, STDERR)
 		}
 		STDOUT.Write([]byte(getPrompt()))
 	}
 }
 
 func Log(tolog interface{}) {
+	STDOUT.Flush()
+	STDERR.Flush()
 	STDOUT.Write([]byte(fmt.Sprintf("%v", tolog) + "\n"))
 }
 
 func Err(tolog interface{}) {
+	STDOUT.Flush()
+	STDERR.Flush()
 	STDERR.Write([]byte(fmt.Sprintf("%v", tolog) + "\n"))
 }

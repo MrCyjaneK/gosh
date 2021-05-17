@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func Handle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer, CWD string, ENV map[string]string) uint8 {
+func Handle(cmd []string, STDIN *bufio.ReadWriter, STDOUT *bufio.ReadWriter, STDERR *bufio.ReadWriter, CWD string, ENV map[string]string) uint8 {
 	if len(cmd) == 1 {
 		STDERR.WriteString("No command provided!")
 		return 127
