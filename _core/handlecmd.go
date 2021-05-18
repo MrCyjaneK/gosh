@@ -12,6 +12,7 @@ import (
 	gosh_exit "git.mrcyjanek.net/mrcyjanek/gosh/exit"
 	gosh_ls "git.mrcyjanek.net/mrcyjanek/gosh/ls"
 	gosh_printenv "git.mrcyjanek.net/mrcyjanek/gosh/printenv"
+	gosh_wget "git.mrcyjanek.net/mrcyjanek/gosh/wget"
 )
 
 func Handlecmd(cmd []string, tostdin []byte) (stdout *bufio.Reader, stderr *bufio.Reader) {
@@ -59,6 +60,8 @@ func handlecmd(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *
 		ERRCODE = gosh_ls.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "printenv":
 		ERRCODE = gosh_printenv.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
+	case "wget":
+		ERRCODE = gosh_wget.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	default:
 		ERRCODE = 127
 		Err("Command '" + cmd[0] + "' not found.")

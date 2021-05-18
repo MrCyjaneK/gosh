@@ -36,12 +36,16 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 			Err(err)
 			STDERR.Flush()
 			ERRCODE = 126
+			stdout.Write([]byte(getPrompt()))
+			STDOUT.Flush()
 			continue
 		}
 		if len(cmd) == 0 {
 			Err("No input command given!")
 			STDERR.Flush()
 			ERRCODE = 126
+			stdout.Write([]byte(getPrompt()))
+			STDOUT.Flush()
 			continue
 		}
 		if cmd[len(cmd)-1] == "&" {
