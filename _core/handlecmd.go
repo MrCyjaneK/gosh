@@ -6,6 +6,7 @@ import (
 	"os"
 
 	gosh_cat "git.mrcyjanek.net/mrcyjanek/gosh/cat"
+	gosh_debug "git.mrcyjanek.net/mrcyjanek/gosh/debug"
 	gosh_echo "git.mrcyjanek.net/mrcyjanek/gosh/echo"
 	gosh_exec "git.mrcyjanek.net/mrcyjanek/gosh/exec"
 	gosh_exit "git.mrcyjanek.net/mrcyjanek/gosh/exit"
@@ -13,7 +14,7 @@ import (
 	gosh_printenv "git.mrcyjanek.net/mrcyjanek/gosh/printenv"
 )
 
-func Handlecmd(cmd []string, tostdin []byte) (stdout *bufio.ReadWriter, stderr *bufio.ReadWriter) {
+func Handlecmd(cmd []string, tostdin []byte) (stdout *bufio.Reader, stderr *bufio.Reader) {
 	//var b bytes.Buffer
 	//b.Write(tostdin)
 	//stdin := bufio.NewReadWriter(bufio.NewReader(&b), bufio.NewWriter(&b))
@@ -21,31 +22,33 @@ func Handlecmd(cmd []string, tostdin []byte) (stdout *bufio.ReadWriter, stderr *
 	//stdout = bufio.NewReadWriter(bufio.NewReader(*out), bufio.NewWriter(&out))
 	//var err bytes.Buffer
 	//stderr = bufio.NewReadWriter(bufio.NewReader(&err), bufio.NewWriter(&err))4
-	stdinr, stdinw, err := os.Pipe()
+	_, stdinr, err := os.Pipe()
 	if err != nil {
 		log.Fatal(err)
 	}
-	stdoutr, stdoutw, err := os.Pipe()
+	stdoutw, stdoutr, err := os.Pipe()
 	if err != nil {
 		log.Fatal(err)
 	}
-	stderrr, stderrw, err := os.Pipe()
+	stderrw, stderrr, err := os.Pipe()
 	if err != nil {
 		log.Fatal(err)
 	}
-	STDIN = bufio.NewReadWriter(bufio.NewReader(stdinr), bufio.NewWriter(stdinw))
-	STDOUT = bufio.NewReadWriter(bufio.NewReader(stdoutr), bufio.NewWriter(stdoutw))
-	STDERR = bufio.NewReadWriter(bufio.NewReader(stderrr), bufio.NewWriter(stderrw))
+	STDIN = bufio.NewReaderSize(bufio.NewReader(stdinr), 1)
+	STDOUT = bufio.NewWriterSize(bufio.NewWriter(stdoutw), 1)
+	STDERR = bufio.NewWriterSize(bufio.NewWriter(stderrw), 1)
 	handlecmd(cmd, STDIN, STDOUT, STDERR)
-	return STDOUT, STDERR
+	return bufio.NewReader(stdoutr), bufio.NewReader(stderrr)
 }
 
-func handlecmd(cmd []string, stdin *bufio.ReadWriter, stdout *bufio.ReadWriter, stderr *bufio.ReadWriter) {
+func handlecmd(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer) {
 	switch cmd[0] {
 	case "cat":
 		ERRCODE = gosh_cat.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "cd":
 		ERRCODE = cdHandle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
+	case "debug":
+		ERRCODE = gosh_debug.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "echo":
 		ERRCODE = gosh_echo.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "exec":

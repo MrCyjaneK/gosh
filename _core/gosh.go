@@ -4,13 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"time"
 )
 
 var (
-	STDIN  *bufio.ReadWriter
-	STDOUT *bufio.ReadWriter
-	STDERR *bufio.ReadWriter
+	STDIN  *bufio.Reader
+	STDOUT *bufio.Writer
+	STDERR *bufio.Writer
 
 	CWD = "/"
 
@@ -20,53 +19,51 @@ var (
 )
 
 func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
-	STDIN = bufio.NewReadWriter(bufio.NewReader(stdin), bufio.NewWriter(stdin))
-	STDOUT = bufio.NewReadWriter(bufio.NewReader(stdout), bufio.NewWriter(stdout))
-	STDERR = bufio.NewReadWriter(bufio.NewReader(stderr), bufio.NewWriter(stderr))
-	go func() {
-		for {
-			STDOUT.Flush()
-			STDERR.Flush()
-			time.Sleep(time.Second / 10)
-		}
-	}()
+	STDIN = bufio.NewReader(stdin)
+	STDOUT = bufio.NewWriter(stdout)
+	STDERR = bufio.NewWriter(stderr)
+
 	loadenv()
 	input := bufio.NewScanner(STDIN)
 	STDOUT.Write([]byte(getPrompt()))
+	STDOUT.Flush()
 	for input.Scan() {
 		os.Chdir(CWD)
+		STDOUT.Flush()
 		ERRCODE = 0
 		cmd, err := Split(input.Text())
 		if err != nil {
 			Err(err)
+			STDERR.Flush()
 			ERRCODE = 126
-			STDOUT.Write([]byte(getPrompt()))
 			continue
 		}
 		if len(cmd) == 0 {
 			Err("No input command given!")
+			STDERR.Flush()
 			ERRCODE = 126
-			STDOUT.Write([]byte(getPrompt()))
 			continue
 		}
 		if cmd[len(cmd)-1] == "&" {
 			cmd = cmd[:len(cmd)-1]
 			go handlecmd(cmd, STDIN, STDOUT, STDERR)
+			STDOUT.Flush()
+			STDERR.Flush()
 		} else {
 			handlecmd(cmd, STDIN, STDOUT, STDERR)
+			STDOUT.Flush()
+			STDERR.Flush()
 		}
-		STDOUT.Write([]byte(getPrompt()))
+		stdout.Write([]byte(getPrompt()))
+		STDOUT.Flush()
+		STDERR.Flush()
 	}
 }
 
 func Log(tolog interface{}) {
-	STDOUT.Flush()
-	STDERR.Flush()
 	STDOUT.Write([]byte(fmt.Sprintf("%v", tolog) + "\n"))
 }
 
 func Err(tolog interface{}) {
-	STDOUT.Flush()
-	STDERR.Flush()
 	STDERR.Write([]byte(fmt.Sprintf("%v", tolog) + "\n"))
 }
