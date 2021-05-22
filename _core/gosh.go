@@ -19,6 +19,11 @@ var (
 )
 
 func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
+	var err error
+	CWD, err = os.Getwd()
+	if err != nil {
+		CWD = "/"
+	}
 	STDIN = bufio.NewReader(stdin)
 	STDOUT = bufio.NewWriter(stdout)
 	STDERR = bufio.NewWriter(stderr)
