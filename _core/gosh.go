@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
+	"strings"
 )
 
 var (
@@ -36,7 +38,17 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 		os.Chdir(CWD)
 		STDOUT.Flush()
 		ERRCODE = 0
-		cmd, err := Split(input.Text())
+		text := input.Text()
+		var re = regexp.MustCompile(`\$[a-zA-Z0-9]+`)
+		vars := re.FindAllString(text, -1)
+		for i := range vars {
+			en, ok := ENV[vars[i][1:]]
+			if !ok {
+				continue
+			}
+			text = strings.ReplaceAll(text, vars[i], en)
+		}
+		cmd, err := Split(text)
 		if err != nil {
 			Err(err)
 			STDERR.Flush()
