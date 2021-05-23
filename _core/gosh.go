@@ -39,7 +39,7 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 		STDOUT.Flush()
 		ERRCODE = 0
 		text := input.Text()
-		var re = regexp.MustCompile(`\$[a-zA-Z0-9]+`)
+		var re = regexp.MustCompile(`\$[a-zA-Z0-9_]+`)
 		vars := re.FindAllString(text, -1)
 		for i := range vars {
 			en, ok := ENV[vars[i][1:]]
