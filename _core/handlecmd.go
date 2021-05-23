@@ -23,7 +23,7 @@ func Handlecmd(cmd []string, tostdin []byte) (stdout *bufio.Reader, stderr *bufi
 	//var out bytes.Buffer
 	//stdout = bufio.NewReadWriter(bufio.NewReader(*out), bufio.NewWriter(&out))
 	//var err bytes.Buffer
-	//stderr = bufio.NewReadWriter(bufio.NewReader(&err), bufio.NewWriter(&err))4
+	//stderr = bufio.NewReadWriter(bufio.NewReader(&err), bufio.NewWriter(&err))
 	_, stdinr, err := os.Pipe()
 	if err != nil {
 		log.Fatal(err)
