@@ -6,6 +6,7 @@ import (
 	"os"
 
 	gosh_cat "git.mrcyjanek.net/mrcyjanek/gosh/cat"
+	gosh_clear "git.mrcyjanek.net/mrcyjanek/gosh/clear"
 	gosh_debug "git.mrcyjanek.net/mrcyjanek/gosh/debug"
 	gosh_echo "git.mrcyjanek.net/mrcyjanek/gosh/echo"
 	gosh_exec "git.mrcyjanek.net/mrcyjanek/gosh/exec"
@@ -47,6 +48,8 @@ func handlecmd(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *
 	switch cmd[0] {
 	case "cat":
 		ERRCODE = gosh_cat.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
+	case "clear":
+		ERRCODE = gosh_clear.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "cd":
 		ERRCODE = cdHandle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "debug":
