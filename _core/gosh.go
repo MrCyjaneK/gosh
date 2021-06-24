@@ -48,32 +48,41 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 			}
 			text = strings.ReplaceAll(text, vars[i], en)
 		}
-		cmd, err := Split(text)
-		if err != nil {
-			Err(err)
-			STDERR.Flush()
-			ERRCODE = 126
-			stdout.Write([]byte(getPrompt()))
-			STDOUT.Flush()
-			continue
-		}
-		if len(cmd) == 0 {
-			Err("No input command given!")
-			STDERR.Flush()
-			ERRCODE = 126
-			stdout.Write([]byte(getPrompt()))
-			STDOUT.Flush()
-			continue
-		}
-		if cmd[len(cmd)-1] == "&" {
-			cmd = cmd[:len(cmd)-1]
-			go handlecmd(cmd, STDIN, STDOUT, STDERR)
-			STDOUT.Flush()
-			STDERR.Flush()
-		} else {
-			handlecmd(cmd, STDIN, STDOUT, STDERR)
-			STDOUT.Flush()
-			STDERR.Flush()
+		cmds, err := Split(text)
+		var cmd []string
+		for c := range cmds {
+			cmd = append(cmd, cmds[c])
+			if cmds[c] == ";" || cmds[c][len(cmds[c])-1] == ';' || len(cmds)-1 == c {
+				if err != nil {
+					Err(err)
+					STDERR.Flush()
+					ERRCODE = 126
+					STDOUT.Flush()
+					cmd = []string{}
+					continue
+				}
+				if len(cmd) == 0 {
+					Err("No input command given!")
+					STDERR.Flush()
+					ERRCODE = 126
+					STDOUT.Flush()
+					cmd = []string{}
+					continue
+				}
+				if cmd[len(cmd)-1] == "&" {
+					cmd = cmd[:len(cmd)-1]
+					go func() {
+						handlecmd(cmd, STDIN, STDOUT, STDERR)
+						STDOUT.Flush()
+						STDERR.Flush()
+					}()
+				} else {
+					handlecmd(cmd, STDIN, STDOUT, STDERR)
+					STDOUT.Flush()
+					STDERR.Flush()
+				}
+				cmd = []string{}
+			}
 		}
 		stdout.Write([]byte(getPrompt()))
 		STDOUT.Flush()
