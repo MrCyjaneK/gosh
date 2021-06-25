@@ -1,5 +1,7 @@
 # Gosh
 
+[![Build Status](https://ci.mrcyjanek.net/badge/8fba18c1?branch=master)](https://ci.mrcyjanek.net/repos/365)
+
 Simple shell written in golang.
 
 To start an interactive shell you can do:
