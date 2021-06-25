@@ -12,6 +12,7 @@ import (
 	gosh_exec "git.mrcyjanek.net/mrcyjanek/gosh/exec"
 	gosh_exit "git.mrcyjanek.net/mrcyjanek/gosh/exit"
 	gosh_ls "git.mrcyjanek.net/mrcyjanek/gosh/ls"
+	gosh_man "git.mrcyjanek.net/mrcyjanek/gosh/man"
 	gosh_printenv "git.mrcyjanek.net/mrcyjanek/gosh/printenv"
 	gosh_sha512sum "git.mrcyjanek.net/mrcyjanek/gosh/sha512sum"
 	gosh_soexec "git.mrcyjanek.net/mrcyjanek/gosh/soexec"
@@ -63,6 +64,8 @@ func handlecmd(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *
 		ERRCODE = gosh_exit.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "ls":
 		ERRCODE = gosh_ls.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
+	case "man":
+		ERRCODE = gosh_man.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "printenv":
 		ERRCODE = gosh_printenv.Handle(cmd, STDIN, STDOUT, STDERR, CWD, ENV)
 	case "sha512sum":

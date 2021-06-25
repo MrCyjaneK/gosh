@@ -1,0 +1,13 @@
+man 0.0.0
+
+NAME
+    man - simple manual reader for gosh
+
+SYNOPSIS
+    man --list
+    man [page]
+
+DESCRIPTION
+    man is a manual page reader. To match with the gosh philosophy, it doesn't have any depedencies - such having the files in the system. They are embeded inside, and you can check all pages with `man --list`
+
+    If you need to embed some manual pages inside, simply put a file in /gosh/man/manpages/ and recompile it.

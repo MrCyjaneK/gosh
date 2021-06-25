@@ -32,6 +32,7 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 
 	loadenv()
 	input := bufio.NewScanner(STDIN)
+	STDOUT.WriteString("Welcome to Gosh - Shell written in Golang. To get started check `man --list` for a list of commands!\n")
 	STDOUT.Write([]byte(getPrompt()))
 	STDOUT.Flush()
 	for input.Scan() {
