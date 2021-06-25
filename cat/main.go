@@ -20,6 +20,7 @@ func Handle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *buf
 		if err != nil {
 			errcode = 1
 			STDERR.WriteString(err.Error() + "\n")
+			continue
 		}
 		io.Copy(STDOUT, file)
 	}
