@@ -1,0 +1,14 @@
+ls 0.0.0
+
+NAME
+    ls - list directory contents
+
+SYNOPSIS
+    ls [OPTIONS] [FILE(s)]
+
+DESCRIPTION
+    ls support following arguments
+        
+    -a|--all - print all directories, even the ones that start with `.`
+    
+    If FILE(s) is not provided, current directory is used

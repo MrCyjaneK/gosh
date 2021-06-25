@@ -1,0 +1,11 @@
+clear 0.0.0
+
+NAME
+    clear - clear the terminal screen
+
+SYNOPSIS
+    clear
+
+DESCRIPTION
+    clear (at the moment) works only on linux builds. On windows it prints `unsupported' notification and try to clear the screen anyway.
+    To make sure that some script (that should fail on errors) will not fail, clear always return 0, even if it didn't work.

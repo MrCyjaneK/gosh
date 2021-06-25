@@ -1,0 +1,13 @@
+wget 0.0.0
+
+NAME
+    wget - dead simple network downloader.
+
+SYNOPSIS
+    wget [OPTION](s) [URL(s)]
+
+DESCRIPTION
+    wget let you download things from the internet.
+
+    options:
+    -O|--output - where should it be saved? `-' for stdout

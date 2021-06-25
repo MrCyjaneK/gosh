@@ -1,0 +1,10 @@
+exec 0.0.0
+
+NAME
+    exec - execute a command
+
+SYNOPSIS
+    exec [BINARY] [ARG(s)]
+
+DESCRIPTION
+    exec execute BINARY and pass ARG(s) as arguments.

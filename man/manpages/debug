@@ -1,0 +1,9 @@
+debug 0.0.0
+
+NAME
+    debug - debug gosh
+SYNOPSIS
+    debug ???
+
+DESCRIPTION
+    Undocumented command that print various things, it may change from version to version.

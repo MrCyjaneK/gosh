@@ -1,0 +1,10 @@
+cd 0.0.0
+
+NAME
+    cd - change directory
+
+SYNOPSIS
+    cd [directory]
+
+DESCRIPTION
+    'cd` is a special command, that live inside of the '_core` package. Because changing the working directory require changing of variables that are not exposed to individual commands.

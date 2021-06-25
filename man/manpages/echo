@@ -1,0 +1,10 @@
+echo 0.0.0
+
+NAME
+    echo - display a line of text
+
+SYNOPSIS
+    echo [STRING]
+
+DESCRIPTION
+    echo displays a string of text.

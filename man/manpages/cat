@@ -1,0 +1,12 @@
+cat 0.0.0
+
+NAME
+    cat - concatenate files and print on the standard output
+
+SYNOPSIS
+    cat [FILE]
+
+DESCRIPTION
+    Concatenate FILE(s) to standard output.
+
+    With no FILE - read standard input.

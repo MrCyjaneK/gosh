@@ -1,0 +1,10 @@
+exit 0.0.0
+
+NAME
+    exit - exit the gosh
+
+SYNOPSIS
+    exit [STATUS]
+
+DESCRIPTION
+    exit causes gosh to exit, if STATUS is supplied it is then sent to the os.Exit call (`os.Exit(STATUS)').

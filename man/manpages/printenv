@@ -1,0 +1,10 @@
+ls 0.0.0
+
+NAME
+    printenv - print all or part of environment
+
+SYNOPSIS
+    printenv [VARIABLE(s)]
+
+DESCRIPTION
+    printenv called without any arguments print all environment variables, that you can use with $ENV. If you want to print one or more VARIABLE(s), you can put their names in the arguments.

@@ -1,0 +1,16 @@
+soexec 0.0.0
+
+NAME
+    soexec - execute a plugin
+
+SYNOPSIS
+    soexec [PLUGIN] [ARG(s)]
+
+DESCRIPTION
+    Untill Golang will support plugins only on linux - don't hope for `soexec' to execute .dll's on window$
+
+    soexec is a command that allow to execute golang plugins, without having the need for setting executable perimssions. Technically it should be possible to put a `gosh' shell on a w^x filesystem, go to a directory that you can write to, `wget' soexec_example.so file and execute 'soexec soexec_example.so`.
+
+    This feature is not tested, however it should work, and it should be able to bypass w^x restrictions.
+
+    For more in-depth overview check /gosh/soexec
