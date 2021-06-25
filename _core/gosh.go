@@ -51,7 +51,11 @@ func Start(stdin *os.File, stdout *os.File, stderr *os.File) {
 		cmds, err := Split(text)
 		var cmd []string
 		for c := range cmds {
-			cmd = append(cmd, cmds[c])
+			if cmds[c][len(cmds[c])-1] == ';' {
+				cmd = append(cmd, cmds[c][:len(cmds[c])-1])
+			} else {
+				cmd = append(cmd, cmds[c])
+			}
 			if cmds[c] == ";" || cmds[c][len(cmds[c])-1] == ';' || len(cmds)-1 == c {
 				if err != nil {
 					Err(err)
