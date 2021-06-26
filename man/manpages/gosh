@@ -1,0 +1,7 @@
+gosh 0.0.0
+
+NAME
+    gosh - Golang Shell
+
+DESCRIPTION
+    Golang shell is a simple shell that can be embedded into any program, and can be streamed over anything that expose a writer and reader.
