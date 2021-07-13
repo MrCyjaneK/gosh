@@ -13,8 +13,7 @@ var flags map[string]string
 func Handle(cmd []string, STDIN *bufio.Reader, STDOUT *bufio.Writer, STDERR *bufio.Writer, CWD string, ENV map[string]string) uint8 {
 	flags, cmd = h.ParseFlags(cmd)
 	toret := uint8(0)
-
-	if len(cmd) == 0 {
+	if len(cmd) == 1 {
 		files, err := ioutil.ReadDir(CWD)
 		if err != nil {
 			STDERR.WriteString(err.Error() + "\n")
